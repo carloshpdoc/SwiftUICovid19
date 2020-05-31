@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import CovidTrackBR
+//@testable import CovidTrackBR
 
 class CovidTrackBRTests: XCTestCase {
 

@@ -9,116 +9,76 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    var covid19Cases: Covid19Cases
-    
-    init() {
-        CovidTrackBR().getCovidResult { covid19Cases in
-            if let covid19CasesList = covid19Cases {
-                DispatchQueue.main.async {
-                    self.covid19Cases = covid19CasesList
-                }
-            }
-            
-        }
-    }
-    
+    @State var covid19Cases = [Datum]()
     
     var body: some View {
         NavigationView {
-            List {
-                Text("dsads")
-                Text("asadasds")
-                Text("dsadasd")
-//                ForEach(covid19Cases) { items in
-////                    HStack {
-//                        Text(items.state)
-////                            .padding()
-////                            .foregroundColor(Color.white)
-////                            .background(Color.orange)
-////                            .clipShape(Circle())
-////                            .font(.custom("", size: 22))
-////                       VStack(alignment: .leading) {
-//                            Text(items.cases)
-////                                .foregroundColor(Color.gray)
-////                                .font(.custom("", size: 45))
-//
-////                            HStack(alignment: .center, spacing: 10) {
-////                                HStack {
-//                                    Text("☠️")
-//                                    Text(items.death)
-////                                }.padding(5)
-////                                    .foregroundColor(Color.black)
-////                                    .background(Color.white)
-////                                    .cornerRadius(10)
-////
-////                                HStack {
-//                                    Text("🏥")
-//                                    Text(items.suspects)
-////                                }.padding(5)
-////                                    .foregroundColor(Color.black)
-////                                    .background(Color.white)
-////                                    .cornerRadius(10)
-//
-////                            }
-////                        }
-////                        Spacer()
-////                    }
-//
-//                }
+            List(covid19Cases, id: \.uid) { item in
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(item.uf)
+                            .padding()
+                            .foregroundColor(Color.white)
+                            .background(Color.orange)
+                            .clipShape(Circle())
+                            .font(.custom("", size: 18))
+                        Text(item.state)
+                            .foregroundColor(Color.orange)
+                            .font(.custom("", size: 13))
+                    }
+                    Spacer()
+                    
+                    VStack(alignment: .leading) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text("Mortes:")
+                            Text("\(item.deaths)")
+                        }.padding(5)
+                            .foregroundColor(Color.black)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                        
+                        HStack(alignment: .firstTextBaseline) {
+                            Text("Casos:")
+                            Text("\(item.cases)")
+                        }.padding(5)
+                            .foregroundColor(Color.black)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                    }
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Suspeitos:")
+                            Text("\(item.suspects)")
+                        }.padding(5)
+                            .foregroundColor(Color.black)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                        
+                        HStack {
+                            Text("Curados:")
+                            Text("\(item.refuses)")
+                            
+                        }.padding(5)
+                            .foregroundColor(Color.black)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                    }
+                }
+            }.navigationBarTitle("Covid19 Track BR")
+        }
+        .onAppear(perform: loadData)
+    }
+    
+    func loadData() {
+        CovidTrackBR().getCovidResult { result in
+            if let result = result {
+                DispatchQueue.main.async {
+                    self.covid19Cases = result.data
+                }
             }
-            .navigationBarTitle("Covid19 BR ")
         }
     }
 }
-//                HStack {
-//                    Text(tracking.state)
-//                        .padding()
-//                        .foregroundColor(Color.white)
-//                        .background(Color.orange)
-//                        .clipShape(Circle())
-//                        .font(.custom("", size: 22))
-//                    Spacer()
-//                    // other code to display the remaining UI
-//
-//                    VStack(alignment: .center) {
-//
-//                        Text("\(tracking.cases)")
-//                            .foregroundColor(Color.gray)
-//                            .font(.custom("", size: 45))
-//
-//                        HStack(alignment: .center, spacing: 10) {
-//                            HStack {
-//                                Text("☠️")
-//                                Text("\(tracking.death)")
-//                            }.padding(5)
-//                                .foregroundColor(Color.black)
-//                                .background(Color.white)
-//                                .cornerRadius(10)
-//
-//                            HStack {
-//                                Text("🏥")
-//                                Text("\(tracking.suspects)")
-//                            }.padding(5)
-//                                .foregroundColor(Color.black)
-//                                .background(Color.white)
-//                                .cornerRadius(10)
-//
-//                        }
-//
-//
-//                    }
-//
-//                    Spacer()
-//
-//                }
-//            }
-//
-//            .navigationBarTitle("Covid19 BR ")
-//
-//        }
-//    }
-//}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

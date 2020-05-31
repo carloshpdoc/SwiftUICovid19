@@ -10,14 +10,14 @@
 //
 //class Covid19Model: ObservableObject {
 //    
-//    @Published var trackings = [Covid19ViewModel]()
+//    @Published var covid19Cases = [Covid19ViewModel]()
 //    
 //    func getTrackingData() {
 //           
-//        CovidTrackBR().getCovidResult { trackingList in
-//               if let trackingList = trackingList {
+//        CovidTrackBR().getCovidResult { result in
+//               if let result = result {
 //               DispatchQueue.main.async {
-//                    self.trackings = trackingList
+//                    self.result = result
 //                }
 //               }
 //               

@@ -10,8 +10,8 @@ import Foundation
 
 class CovidTrackBR {
     
-    func getCovidResult(completion: @escaping (Covid19Cases?) ->  Void) {
-        let urlString = "https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/rj"
+    func getCovidResult(completion: @escaping (Covid19?) ->  Void) {
+        let urlString = "https://covid19-brazil-api.now.sh/api/report/v1"
        
         guard let url = URL(string:	urlString) else {
             fatalError("Invalid URL")
@@ -23,7 +23,7 @@ class CovidTrackBR {
                 return completion(nil)
             }
             
-            let covid19Cases = try? JSONDecoder().decode(Covid19Cases.self, from: data)
+            let covid19Cases = try? JSONDecoder().decode(Covid19.self, from: data)
 
             completion(covid19Cases)
             
